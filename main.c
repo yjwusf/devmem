@@ -3,11 +3,13 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/mman.h>
+#include <stdlib.h>
 
-#define DEBUG true
+#define DEBUG 1
 
-void get_phys_from_ptr(FILE *f, int len) {
-	int len = 4;
+void get_phys_from_ptr(int fd, int len) {
+	// int len = 4;
 	int *x_p = malloc(len * sizeof(int)); // get phys address
 
 	off_t offset = 0x400000000UL + (off_t)x_p;
@@ -23,16 +25,17 @@ void get_phys_from_ptr(FILE *f, int len) {
 	
 	if (ptr == MAP_FAILED) {
 		perror("Can't map memory!\n");
-		return -1;
+		exit(1);
 	}
 }
 
 int main(int argc, char *argv[]) {
-	FILE *fd = open("/dev/mem", O_SYNC);
-	if (ptr == MAP_FAILED) {
-		perror("Can't map memory.\n");
+	int fd = open("/dev/mem", O_SYNC);
+	if (!fd) {
+		perror("Can't open file\n");
 		return -1;
 	}
 
+	get_phys_from_ptr(fd, 4);
 	return 0;
 }
