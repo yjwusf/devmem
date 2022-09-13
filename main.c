@@ -99,5 +99,6 @@ int main(int argc, char *argv[]) {
 	p->c += 8;
 	printf("c value in uncohere struct at vaddr %lx paddr %lx: %lx %lx %lx %lx\n", (uintptr_t)p, offset, p->a, p->b, p->c, p->d);
 	// printf("c value in coherent struct at vaddr %lx paddr %lx: %lx %lx %lx %lx\n", (uintptr_t)x_p, vtop((uintptr_t)x_p), x_p->a, x_p->b, x_p->c, x_p->d);
+	close(fd);
 	return 0;
 }
